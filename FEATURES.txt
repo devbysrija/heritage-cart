@@ -1,0 +1,276 @@
+================================================================================
+HERITAGE & CO. — COMPREHENSIVE PLATFORM SPECIFICATIONS & FEATURE DOCUMENTATION
+Vintage Antiques & Curated Fine Artifacts Platform (London 1884)
+Signed by srh
+================================================================================
+
+TABLE OF CONTENTS
+-----------------
+1. PLATFORM OVERVIEW & ARCHITECTURE
+2. ONLINE BIDDING & AUCTION SYSTEM
+   2.1 Multi-User Bidding Engine
+   2.2 Live Public Bidding Salon (LiveAuctionSalon)
+   2.3 Interactive Bidding Modal (BiddingModal)
+   2.4 Mid-Level Admin Final Call Console (AuctionDeskModal)
+   2.5 Customer Portfolio & Award Claiming (CustomerDashboardModal)
+   2.6 Fast Persona Switcher for Instant Testing
+3. ROLE-BASED ACCESS CONTROL & DEMO ACCOUNTS
+4. REST API ENDPOINTS & DATA SCHEMAS
+5. CATALOG GALLERY & DISCOVERY ENGINE
+6. APPRAISAL & CURATOR VALUATION SYSTEM
+7. E-COMMERCE, VAULT ESCROW & CERTIFICATES
+8. SETUP & EXECUTION GUIDE
+
+================================================================================
+1. PLATFORM OVERVIEW & ARCHITECTURE
+================================================================================
+
+Heritage & Co. is a luxury antique platform combining 19th-century London 
+scholarly aesthetics (parchment textures, aged brass, deep espresso typography, 
+museum emerald badges) with modern, high-performance web engineering.
+
+Tech Stack:
+- Frontend: React 19, Vite, Lucide Icons, Vanilla CSS Design System
+- Backend: Node.js, Express REST API Engine
+- Persistence: Dual-Mode Architecture:
+  * Primary: MongoDB Atlas Cluster
+  * Automatic Fallback: High-Speed In-Memory Vault Store (activates seamlessly 
+    if network/firewall restricts Atlas connectivity)
+
+================================================================================
+2. ONLINE BIDDING & AUCTION SYSTEM
+================================================================================
+
+2.1 MULTI-USER BIDDING ENGINE
+- Any visitor or registered collector can participate in live auctions.
+- Each antique marked for auction maintains:
+  * Starting Bid (Minimum initial valuation)
+  * Current Leading Bid
+  * Minimum Bid Increment (e.g., £100, £200, £250, £500)
+  * Reserve Price (Tracks reserve met status)
+  * Auction Status ('active', 'curator_review', 'awarded', 'closed')
+  * Auction End Date
+  * Total Bids Count
+  * Awarded Record: Winner ID, Name, Email, Price, Award Date, Decision Notes, 
+    and Arbiter Credentials.
+
+2.2 LIVE PUBLIC BIDDING SALON (LiveAuctionSalon.jsx)
+- Dedicated section accessible via the "Live Bidding Salon" tab in the header.
+- Ticker bar displaying:
+  * Active Auction Lots count
+  * Total Collector Bids placed across all lots
+  * Highest Lead Offer currently active
+  * Total Final Calls Executed (awarded lots)
+- Tri-Filter Controls:
+  * "All Auction Lots": Shows all biddable lots
+  * "Live Bidding Open": Shows lots actively accepting offers
+  * "Final Calls Awarded": Shows lots concluded by the arbiter
+- Each card shows live pulsing status dots ("LIVE BIDDING" / "AWARDED"), 
+  current leading price, total offers count, and direct action triggers.
+- For Mid-Level Admins, displays a persistent Arbiter Shortcut button: 
+  "Open Arbiter Final Call Desk".
+
+2.3 INTERACTIVE BIDDING MODAL (BiddingModal.jsx)
+- Launched whenever any user clicks "Place Bid" or "Enter Bidding Salon".
+- Visual lot summary with high-resolution imagery, lot certificate ID, 
+  and historical origin.
+- Live Bidding Log & Activity Stream:
+  * Displays chronological list of offers placed on that specific lot.
+  * Badges for each bid:
+    - Leading Offer (Current highest bid)
+    - Outbid (Superseded by a higher offer)
+    - Won by Final Call (Selected winner)
+  * Displays collector name, timestamp, offer amount, and optional statement.
+- Automated Bid Validation:
+  * Enforces minimum acceptable bid (Current Lead Bid + Increment).
+  * Quick-Increment Shortcut Buttons (+£100, +£250, +£500, +£1,000).
+  * Collector Statement input: Allows bidders to submit provenance notes or 
+    family acquisition intent, which the mid-level admin reviews when making 
+    the final call.
+- Once awarded by the admin, renders the sealed Gavel banner with winner 
+  name, price, award date, and administrator notes.
+
+2.4 MID-LEVEL ADMIN FINAL CALL CONSOLE (AuctionDeskModal.jsx)
+- Specially designed workspace for the Mid-Level Auction Administrator (role: 
+  'mid_admin') and Senior Curator ('admin').
+- Three Dedicated Workspaces:
+  1. Active Lots Awaiting Final Call: Queue of ongoing lots requiring decision.
+  2. Final Calls Executed: Sealed archival history of concluded lots.
+  3. Catalog Auction Enabler: Tool to toggle auction mode on any catalog item, 
+     customizing starting bids, increments, and reserve prices.
+- Discretionary Human-in-the-Loop "Final Call":
+  * Displays all candidate bidders, their emails, offer amounts, submission 
+    times, and collector statements.
+  * The mid-level admin is NOT restricted to an automated highest-bidder 
+    formula; they have full authority to evaluate collector vetting, 
+    preservation intent, or verified escrow credentials.
+  * Action button on every bid row: "Make Final Call: Award Lot to this Bidder".
+- Execution & Confirmation Drawer:
+  * Prompts for Curator Award Rationale & Protocol Conditions (e.g., 
+    "Awarded to Lord Harrington following Mayfair archival storage verification").
+  * Confirms and seals the award, updating the lot status to 'awarded', 
+    locking subsequent bids, setting isReserved: true, and generating the 
+    official certificate record.
+- Includes a "Reopen for Bidding" mechanism if the admin needs to reset a lot.
+
+2.5 CUSTOMER PORTFOLIO & AWARD CLAIMING (CustomerDashboardModal.jsx)
+- Dedicated "My Active Bids & Awards" tab for collectors.
+- Real-time status indicators:
+  * "Currently Leading Offer"
+  * "Outbid by Another Collector"
+  * "Won by Final Call"
+- Award Claim Action: If the lot was awarded to the logged-in customer by the 
+  mid-level admin, an instant button appears:
+  "Claim Lot & Proceed to Vault Escrow" -> Pre-fills checkout with winning bid 
+  amount and transitions directly to Escrow Checkout.
+
+2.6 FAST PERSONA SWITCHER
+- Integrated directly into the top header banner and Auth dialog.
+- Allows 1-click persona switching without re-entering passwords:
+  * 👑 Mid-Level Admin (Arthur Wellesley - Final Call Arbiter)
+  * 🎩 Bidder A (Lord Edward Harrington - Collector)
+  * 💎 Bidder B (Lady Eleanor Cavendish - Collector)
+  * 🏛️ Senior Curator (Sir Julian Vance - Senior Master Appraiser)
+
+================================================================================
+3. ROLE-BASED ACCESS CONTROL & PRESET DEMO ACCOUNTS
+================================================================================
+
+Role: 'customer' (Collector)
+- Capabilities: Browse catalog, place live bids, request appraisals, 
+  checkout with escrow, view personal bids and acquisition certificates.
+- Preset User A: Lord Edward Harrington
+  Email: harrington@mayfair-estate.co.uk | Password: customer123
+- Preset User B: Lady Eleanor Cavendish
+  Email: eleanor@cavendish-manor.co.uk   | Password: customer123
+
+Role: 'mid_admin' (Mid-Level Auction Administrator)
+- Capabilities: All collector capabilities + Access to the Auction Final Call 
+  Desk, review bidding logs, execute discretionary Final Calls, reopen lots, 
+  and toggle auction mode on any catalog item.
+- Preset User: Arthur Wellesley (Auction Desk Arbiter)
+  Email: mid.admin@heritage.co.uk       | Password: mid123
+
+Role: 'admin' (Senior Master Appraiser / Director)
+- Capabilities: Full system access, including Appraisal review/valuation, 
+  Auction Final Calls, and adding new antiques to the permanent collection.
+- Preset User: Sir Julian Vance
+  Email: admin@heritage.co.uk           | Password: admin123
+
+================================================================================
+4. REST API ENDPOINTS & DATA SCHEMAS
+================================================================================
+
+4.1 AUCTION & BIDDING ENDPOINTS
+- GET  /api/bids
+  Query params: ?antiqueId=... & ?email=...
+  Returns bids sorted by amount descending and timestamp.
+  
+- POST /api/bids
+  Body: { antiqueId, bidder: { userId, name, email }, amount, note }
+  Validates minimum acceptable bid, sets bid status to 'leading', marks previous 
+  leading bids as 'outbid', and updates antique's currentBid and totalBidsCount.
+
+- POST /api/admin/auctions/:id/final-call
+  Body: { winningBidId, adminNotes, decidedByName, decidedByEmail, decidedByRole }
+  Executes the mid-level admin's final call, marks winning bid as 'awarded', 
+  other bids as 'declined', and sets antique status to 'awarded'.
+
+- POST /api/admin/auctions/:id/reopen
+  Resets an awarded auction lot back to 'active' live bidding status.
+
+- POST /api/admin/auctions/:id/configure
+  Body: { isAuction, startingBid, bidIncrement, reservePrice, auctionEndsAt }
+  Updates auction parameters on any antique in the catalog.
+
+4.2 GENERAL PLATFORM ENDPOINTS
+- GET  /api/health                     - Health check and DB status
+- GET  /api/stats                      - Platform valuations, lots, and bids stats
+- GET  /api/antiques                   - Catalog query with filters & sorting
+- GET  /api/antiques/:id               - Single antique details
+- POST /api/antiques                   - Admin add antique
+- POST /api/orders                     - Create escrow acquisition order
+- GET  /api/orders                     - Retrieve orders (filter by email)
+- POST /api/appraisals                 - Customer submit antique for valuation
+- GET  /api/appraisals                 - List appraisal submissions
+- PUT  /api/admin/appraisals/:id       - Appraiser set valuation & notes
+- POST /api/auth/register              - Register customer/admin account
+- POST /api/auth/login                 - Authenticate account
+
+================================================================================
+5. CATALOG GALLERY & DISCOVERY ENGINE
+================================================================================
+
+- Catalog Grid (CatalogGrid.jsx):
+  * Category Filters: Instruments & Cartography, Horology, Leather Books & 
+    Manuscripts, Estate Jewelry & Curios, Fine Furniture.
+  * Historical Era Filters: 18th Century, 19th Century.
+  * Auction Quick-Filter: Toggle between all items and live auction lots only.
+  * Price ceiling slider (£2,000 to £30,000).
+  * Multi-criteria sorting (Era, Price, Leading Bids, Date).
+  * Live full-text search.
+- Artifact Inspection Modal (ProductModal.jsx):
+  * High-res multi-image viewer with Vault Inspection Grade A+ badge.
+  * Physical & material specifications (materials, dimensions, condition).
+  * Historical narrative and documented provenance sheet with certificate ID.
+  * Dynamic action buttons: "Place Live Bid" or "Acquire Artifact".
+- London Map Explorer (LondonMapSection.jsx):
+  * Interactive vintage cartographic map of Victorian London.
+  * Pins linking historic Fleet Street, Strand, Bloomsbury, and Mayfair 
+    locations to corresponding catalog items.
+- Authenticity Guarantee (AuthenticityGuarantee.jsx):
+  * Archival verification standards, SSEF Swiss certification criteria, 
+    and white-glove transport terms.
+
+================================================================================
+6. APPRAISAL & CURATOR VALUATION SYSTEM
+================================================================================
+
+- Appraisal Submission Portal (AppraisalModal.jsx):
+  * Collectors submit family heirlooms for valuation by Master Appraisers.
+  * Captures owner details, approx age, category, and historical narrative.
+- Master Appraiser Desk (AdminAppraiserDashboard.jsx):
+  * Accessible by Senior Admin (Sir Julian Vance).
+  * Incoming valuation requests queue.
+  * Decision controls: Status (Accepted & Valued / Rejected), Valuation Offer (£), 
+    and Archival Curator Notes.
+  * Customer can view updated valuations in their Private Portfolio.
+
+================================================================================
+7. E-COMMERCE, VAULT ESCROW & CERTIFICATES
+================================================================================
+
+- Shopping Cart Drawer (CartDrawer.jsx):
+  * Slide-out cart displaying selected artifacts, thumbnail previews, 
+    certificate serial numbers, subtotal, and white-glove delivery fees.
+- Escrow Checkout Modal (CheckoutModal.jsx):
+  * Full shipping and white-glove courier capture.
+  * Escrow payment confirmation.
+  * Official Printable Certificate of Authenticity Generator:
+    - Official Heritage Guild Wax Seal
+    - Serialized Order Reference (HA-ORD-XXXXXX)
+    - Item Specifications & Provenance
+    - Curator Signature & Date
+
+================================================================================
+8. SETUP & EXECUTION GUIDE
+================================================================================
+
+1. START BACKEND SERVER:
+   cd backend
+   node server.js
+   -> Server listens on http://localhost:5000
+
+2. START FRONTEND VITE DEV SERVER:
+   cd frontend
+   npm run dev
+   -> Vite dev server listens on http://localhost:5173
+
+3. PRODUCTION BUILD:
+   cd frontend
+   npm run build
+   -> Compiles optimized bundle to dist/
+
+================================================================================
+End of Documentation
+================================================================================

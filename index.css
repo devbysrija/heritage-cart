@@ -1,0 +1,236 @@
+/* Heritage Antiques Design System Token Styles - Signed by srh */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --bg-parchment: #FAF7F2;
+  --bg-card: #F4EFE6;
+  --bg-card-hover: #EFE8DC;
+  --bg-dark: #1E1714;
+  --bg-dark-card: #28201B;
+  
+  --text-espresso: #2A211D;
+  --text-body: #4A3E37;
+  --text-muted: #8C7E74;
+  --text-gold: #C59A4E;
+  
+  --border-delicate: #E2D7C7;
+  --border-focus: #C59A4E;
+  --border-espresso: #2A211D;
+  
+  --accent-brass: #C59A4E;
+  --accent-brass-hover: #B0843A;
+  --accent-mahogany: #6E2C1C;
+  --accent-emerald: #1B4D3E;
+  --accent-teal: #3B6E79;
+  
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-display: 'Cinzel', serif;
+  --font-sans: 'Plus Jakarta Sans', sans-serif;
+  
+  --shadow-gallery: 0 4px 25px -4px rgba(42, 33, 29, 0.06);
+  --shadow-hover: 0 12px 35px -6px rgba(42, 33, 29, 0.12);
+  --transition-smooth: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-parchment);
+  color: var(--text-body);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  color: var(--text-espresso);
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.brand-font {
+  font-family: var(--font-display);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.serif-font {
+  font-family: var(--font-serif);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-parchment);
+}
+::-webkit-scrollbar-thumb {
+  background: #D5C8B8;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-brass);
+}
+
+/* Paper Grain Texture Overlay */
+.paper-texture {
+  background-color: var(--bg-parchment);
+  background-image: radial-gradient(#2A211D 0.5px, transparent 0.5px);
+  background-size: 24px 24px;
+  background-position: 0 0;
+  opacity: 0.98;
+}
+
+/* Custom Delicate Border Utilities */
+.border-delicate {
+  border: 1px solid var(--border-delicate);
+}
+.border-b-delicate {
+  border-bottom: 1px solid var(--border-delicate);
+}
+.border-t-delicate {
+  border-top: 1px solid var(--border-delicate);
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: var(--text-espresso);
+  color: #FAF7F2;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.85rem 1.75rem;
+  border: 1px solid var(--text-espresso);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.btn-primary:hover {
+  background-color: var(--accent-brass);
+  border-color: var(--accent-brass);
+  color: #1E1714;
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--text-espresso);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.85rem 1.75rem;
+  border: 1px solid var(--border-espresso);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.btn-secondary:hover {
+  background-color: var(--bg-card);
+  border-color: var(--accent-brass);
+  color: var(--accent-brass);
+}
+
+.btn-brass {
+  background-color: var(--accent-brass);
+  color: #1E1714;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.85rem 1.75rem;
+  border: 1px solid var(--accent-brass);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.btn-brass:hover {
+  background-color: var(--accent-brass-hover);
+  border-color: var(--accent-brass-hover);
+}
+
+/* Badge tags */
+.badge-era {
+  background-color: rgba(197, 154, 78, 0.12);
+  color: var(--accent-brass-hover);
+  border: 1px solid rgba(197, 154, 78, 0.3);
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 0.25rem 0.65rem;
+  text-transform: uppercase;
+  display: inline-block;
+}
+
+.badge-rarity {
+  background-color: rgba(110, 44, 28, 0.08);
+  color: var(--accent-mahogany);
+  border: 1px solid rgba(110, 44, 28, 0.25);
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 0.25rem 0.65rem;
+  text-transform: uppercase;
+  display: inline-block;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(30, 23, 20, 0.65);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+/* Certificate Wax Seal Styling */
+.wax-seal {
+  width: 54px;
+  height: 54px;
+  background: radial-gradient(circle, #8C2318 0%, #5E140C 100%);
+  border-radius: 50%;
+  box-shadow: inset 0 2px 4px rgba(255,255,255,0.2), 0 4px 10px rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #F4EFE6;
+  font-family: var(--font-display);
+  font-weight: bold;
+  font-size: 1.1rem;
+  border: 2px dashed rgba(255,255,255,0.25);
+}
+
+/* Keyframes animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
